@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL } from '../config';
 
 function TabButton({ active, onClick, children }) {
   return (
@@ -78,9 +79,9 @@ export default function Admin() {
     if (user?.role !== 'admin') return;
     setLoading(true);
     Promise.all([
-      fetch('http://localhost:5000/api/users').then(r => r.json()),
-      fetch('http://localhost:5000/api/listings').then(r => r.json()),
-      fetch('http://localhost:5000/api/payments').then(r => r.json()),
+      fetch('https://your-backend-url.onrender.com/api/users').then(r => r.json()),
+      fetch('https://your-backend-url.onrender.com/api/listings').then(r => r.json()),
+      fetch('https://your-backend-url.onrender.com/api/payments').then(r => r.json()),
     ]).then(([users, listings, payments]) => {
       setUsers(users);
       setListings(listings);
@@ -90,7 +91,7 @@ export default function Admin() {
   }, [user]);
 
   const handleApprove = async (id) => {
-    await fetch(`http://localhost:5000/api/listings/${id}`, {
+    await fetch(`https://your-backend-url.onrender.com/api/listings/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${user?.token}` },
       body: JSON.stringify({ status: 'active', flagged: false })
@@ -100,7 +101,7 @@ export default function Admin() {
     setToast('Listing approved and notification sent!');
   };
   const handleReject = async (id) => {
-    await fetch(`http://localhost:5000/api/listings/${id}`, {
+    await fetch(`https://your-backend-url.onrender.com/api/listings/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${user?.token}` },
       body: JSON.stringify({ status: 'rejected' })
@@ -111,7 +112,7 @@ export default function Admin() {
   };
   const handleDeleteUser = async (id) => {
     if (!window.confirm('Delete this user?')) return;
-    await fetch(`http://localhost:5000/api/users/${id}`, {
+    await fetch(`https://your-backend-url.onrender.com/api/users/${id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${user?.token}` }
     });

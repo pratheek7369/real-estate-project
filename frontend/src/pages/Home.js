@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -9,7 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     // Fetch all listings for autocomplete
-    fetch('http://localhost:5000/api/listings')
+    fetch('https://real-estate-backend-eeot.onrender.com/api/listings')
       .then(res => res.json())
       .then(data => {
         // Build unique suggestions from title, location, country

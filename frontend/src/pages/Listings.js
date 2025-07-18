@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useLocation } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
 
 const CLOUDINARY_UPLOAD_PRESET = 'YOUR_UPLOAD_PRESET'; // TODO: Replace with your Cloudinary preset
 const CLOUDINARY_CLOUD_NAME = 'YOUR_CLOUD_NAME'; // TODO: Replace with your Cloudinary cloud name
@@ -121,7 +122,7 @@ export default function Listings() {
 
   const fetchListings = () => {
     setLoading(true);
-    fetch('http://localhost:5000/api/listings')
+    fetch('https://real-estate-backend-eeot.onrender.com/api/listings')
       .then(res => res.json())
       .then(data => {
         setListings(data);
@@ -204,7 +205,7 @@ export default function Listings() {
   };
 
   const handleCreate = async (fields) => {
-    const res = await fetch('http://localhost:5000/api/listings', {
+    const res = await fetch('https://real-estate-backend-eeot.onrender.com/api/listings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -222,7 +223,7 @@ export default function Listings() {
   };
 
   const handleEdit = async (fields) => {
-    const res = await fetch(`http://localhost:5000/api/listings/${editListing._id}`, {
+    const res = await fetch(`https://real-estate-backend-eeot.onrender.com/api/listings/${editListing._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -241,7 +242,7 @@ export default function Listings() {
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this listing?')) return;
-    const res = await fetch(`http://localhost:5000/api/listings/${id}`, {
+    const res = await fetch(`https://real-estate-backend-eeot.onrender.com/api/listings/${id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${user?.token}` }
     });
