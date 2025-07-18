@@ -6,7 +6,8 @@ require('dotenv').config();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+// Allow all origins for CORS (for testing)
+app.use(cors({ origin: '*', credentials: true }));
 
 // Health check
 app.get('/api/health', (req, res) => {
